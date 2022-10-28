@@ -5,6 +5,8 @@ CURRENT_DIR=`cd "$(dirname "$0")"; pwd`
 
 # Criação do usuário não root e autorização para sudo
 chmod 777 /content
+mkdir /workspace
+chmod 777 /workspace
 
 if [[ ! -d /content/user ]]; then
     echo "Creating user..."
@@ -22,7 +24,7 @@ which deroot >/dev/null 2>/dev/null || {
 if [[ ! -d /nix ]]; then
     echo "Installing nix..."
     # Instalação do nix em modo multiuser
-    mkdir -m 0755 /nix && chown colab /nix
+    mkdir -m 0755 /nix && chown colab /nix && chown colab /workspace && chown colab /content
     curl -L https://nixos.org/nix/install > /tmp/nix-install
     mkdir -p /etc/nix
     echo 'sandbox = false' > /etc/nix/nix.conf
